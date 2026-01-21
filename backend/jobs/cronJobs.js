@@ -9,7 +9,7 @@ export function startCronJobs(supabase) {
   // ============================================
   // Cron syntax: "minute hour day month day-of-week"
   // "0 9 * * *" = Every day at 9:00 AM
-  cron.schedule("/1 * * * *", async () => {
+  cron.schedule("*/2 * * * *", async () => {
     console.log("\n");
     console.log("╔════════════════════════════════════╗");
     console.log("║  ⏰ DAILY REMINDER CRON TRIGGERED  ║");
