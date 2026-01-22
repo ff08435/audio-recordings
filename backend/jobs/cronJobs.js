@@ -8,12 +8,12 @@ export function startCronJobs(supabase) {
   // DAILY REMINDER AT 9:00 AM
   // ============================================
   // Cron syntax: "minute hour day month day-of-week"
-  // "0 9 * * *" = Every day at 9:00 AM
-  cron.schedule("45 11 * * *", async () => {
+  // "15 12 * * *" = Every day at 12:15 PM
+  cron.schedule("15 12 * * *", async () => {
     console.log("\n");
     console.log("╔════════════════════════════════════╗");
     console.log("║  ⏰ DAILY REMINDER CRON TRIGGERED  ║");
-    console.log("║  Time: 9:00 AM                     ║");
+    console.log("║  Time: 12:15 PM                    ║");
     console.log(`║  ${new Date().toLocaleString()}  ║`);
     console.log("╚════════════════════════════════════╝");
     console.log("\n");
