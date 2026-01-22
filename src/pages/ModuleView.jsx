@@ -61,16 +61,25 @@ export default function ModuleView() {
   return (
     <div className="min-h-screen pb-20">
       <div className="p-6 space-y-4">
-        {/* Fixed back button with larger touch target for iOS */}
+        {/* Large, easy-to-tap back button for mobile */}
         <button
           onClick={() => navigate("/dashboard")}
-          className="flex items-center gap-2 text-sm font-semibold text-yellow-400 hover:text-yellow-300 
-                     -ml-2 -mt-2 py-3 px-2 min-h-[44px] min-w-[44px] relative z-50 
-                     touch-manipulation active:opacity-70 transition-opacity"
-          style={{ WebkitTapHighlightColor: 'transparent' }}
+          className="flex items-center justify-center gap-3 w-full
+                     bg-yellow-400/10 hover:bg-yellow-400/20 
+                     text-yellow-400 font-bold text-base
+                     py-4 px-6 rounded-xl
+                     border-2 border-yellow-400/30
+                     relative z-50 
+                     touch-manipulation active:scale-95 
+                     transition-all duration-200 shadow-lg"
+          style={{ 
+            WebkitTapHighlightColor: 'transparent',
+            minHeight: '56px',
+            touchAction: 'manipulation'
+          }}
           aria-label="Back to Dashboard"
         >
-          <span className="text-lg">←</span>
+          <span className="text-2xl">←</span>
           <span>Back to Dashboard</span>
         </button>
 
