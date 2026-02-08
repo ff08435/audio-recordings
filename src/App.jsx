@@ -3,6 +3,7 @@ import { useUser } from "./context/UserContext";
 import { useState, useEffect } from "react";
 
 import Onboarding from "./pages/Onboarding";
+import Instructions from "./pages/Instructions";
 import Dashboard from "./pages/Dashboard";
 import ModuleView from "./pages/ModuleView";
 import { syncPendingRecordings } from "./utils/syncRecordings";
@@ -51,6 +52,7 @@ useEffect(() => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Onboarding />} />
+        <Route path="/instructions" element={<Instructions />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/module/:moduleId" element={<ModuleView />} />
       </Routes>

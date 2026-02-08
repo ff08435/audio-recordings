@@ -2,7 +2,7 @@ import { useRecorder } from "../hooks/useRecorder";
 import { db } from "../db/indexdb";
 import { useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
-import { syncPendingRecordings } from "../utils/syncRecordings"; // ✅ FIX #1
+import { syncPendingRecordings } from "../utils/syncRecordings";
 
 export default function SentenceCard({
   sentence,
@@ -31,7 +31,7 @@ export default function SentenceCard({
    */
   const isRecorded = isCompleted;
 
-  // 🔁 FIX #3: Always re-read status from IndexedDB
+  // 🔁 Always re-read status from IndexedDB
   useEffect(() => {
     const load = async () => {
       const record = await db.recordings
@@ -68,7 +68,7 @@ export default function SentenceCard({
     setAudioUrl(null);
   };
 
-  // ✅ FIX #1: Trigger sync after every submit
+  // Trigger sync after every submit
   const submit = async () => {
     if (!audioBlob || isRecorded) return;
 
@@ -99,11 +99,11 @@ export default function SentenceCard({
           : "bg-white"
       }`}
     >
-      <p className="font-semibold">
+      <p className="text-sm text-gray-500 italic">
         {index + 1}. {sentence.english}
       </p>
 
-      <p className="italic text-gray-600">
+      <p className="text-xl font-bold text-gray-900">
         {sentence.transliteration}
       </p>
 
@@ -128,35 +128,33 @@ export default function SentenceCard({
         </div>
       )}
 
-      // 🎧 Playback
-{!isRecorded && audioUrl && (
-  <div className="space-y-2">
-    <audio
-      controls
-      src={audioUrl}
-      onPlay={() => {
-        // Explicitly log to confirm user trigger
-        console.log("Audio playback triggered");
-      }}
-    />
-    <div className="space-x-2">
-      <button
-        onClick={handleReset}
-        className="px-3 py-1 border rounded"
-      >
-        Re-record
-      </button>
+      {/* 🎧 Playback */}
+      {!isRecorded && audioUrl && (
+        <div className="space-y-2">
+          <audio
+            controls
+            src={audioUrl}
+            onPlay={() => {
+              console.log("Audio playback triggered");
+            }}
+          />
+          <div className="space-x-2">
+            <button
+              onClick={handleReset}
+              className="px-3 py-1 border rounded"
+            >
+              Re-record
+            </button>
 
-      <button
-        onClick={submit}
-        className="px-3 py-1 bg-green-600 text-white rounded"
-      >
-        Submit
-      </button>
-    </div>
-  </div>
-)}
-
+            <button
+              onClick={submit}
+              className="px-3 py-1 bg-green-600 text-white rounded"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* ✅ Completed status */}
       {isRecorded && (

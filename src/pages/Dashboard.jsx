@@ -85,6 +85,20 @@ export default function Dashboard() {
   // ✅ JSX MUST BE RETURNED
   return (
     <div className="p-4 space-y-4">
+      {/* Header with Instructions Link */}
+      <div className="flex justify-between items-center mb-2">
+        <h1 className="text-2xl font-bold text-gray-800">Recording Modules</h1>
+        <button
+          onClick={() => {
+            localStorage.removeItem("hasSeenInstructions");
+            navigate("/instructions");
+          }}
+          className="text-sm text-white font-bold bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
+        >
+          📖 View Instructions
+        </button>
+      </div>
+
       {reminderMessage && (
         <ReminderBanner message={reminderMessage} />
       )}

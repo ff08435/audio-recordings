@@ -9,23 +9,46 @@ export default function Onboarding() {
   const [dialect, setDialect] = useState("");
   const [gender, setGender] = useState("");
   const [notificationConsent, setNotificationConsent] = useState(false);
+  const [idError, setIdError] = useState("");
 
   const { setUser } = useUser();
   const navigate = useNavigate();
 
-const submit = async () => {
-  if (!participantId || !dialect || !gender) return;
+  // Validate participant ID format (P-XXX where XXX is a number)
+  const validateParticipantId = (id) => {
+    const regex = /^P-\d+$/;
+    return regex.test(id);
+  };
 
-  const userData = { participantId, dialect, gender };
-  
-  // Only subscribe if user granted permission
-  if (Notification.permission === 'granted') {
-    await subscribeToPush(userData);
-  }
+  const handleIdChange = (e) => {
+    const value = e.target.value.toUpperCase();
+    setParticipantId(value);
+    
+    if (value && !validateParticipantId(value)) {
+      setIdError("Format must be P-XXX (e.g., P-001, P-123)");
+    } else {
+      setIdError("");
+    }
+  };
 
-  setUser(userData);
-  navigate("/dashboard");
-};
+  const submit = async () => {
+    if (!participantId || !dialect || !gender) return;
+    
+    if (!validateParticipantId(participantId)) {
+      setIdError("Invalid format. Use P-XXX (e.g., P-001)");
+      return;
+    }
+
+    const userData = { participantId, dialect, gender };
+    
+    // Only subscribe if user granted permission
+    if (Notification.permission === 'granted') {
+      await subscribeToPush(userData);
+    }
+
+    setUser(userData);
+    navigate("/instructions");
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
@@ -50,11 +73,21 @@ const submit = async () => {
               Participant ID
             </label>
             <input
-              className="w-full rounded-lg bg-neutral-900 border border-neutral-700 px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              className={`w-full rounded-lg bg-neutral-900 border px-3 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-2 ${
+                idError 
+                  ? "border-red-500 focus:ring-red-400" 
+                  : "border-neutral-700 focus:ring-yellow-400"
+              }`}
               placeholder="e.g. P-023"
               value={participantId}
-              onChange={(e) => setParticipantId(e.target.value)}
+              onChange={handleIdChange}
             />
+            {idError && (
+              <p className="text-xs text-red-400">{idError}</p>
+            )}
+            {!idError && participantId && validateParticipantId(participantId) && (
+              <p className="text-xs text-green-400">✓ Valid format</p>
+            )}
           </div>
 
           {/* Dialect */}
@@ -94,7 +127,7 @@ const submit = async () => {
         {/* CTA */}
         <button
           onClick={submit}
-          disabled={!participantId || !dialect || !gender}
+          disabled={!participantId || !dialect || !gender || !validateParticipantId(participantId)}
           className="w-full rounded-lg bg-yellow-400 py-2 text-sm font-semibold text-black hover:bg-yellow-300 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Continue
