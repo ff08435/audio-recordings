@@ -6,25 +6,7 @@ import { db } from "../db/indexdb";
 import { useUser } from "../context/UserContext";
 import ProgressBar from "../Components/ProgressBar";
 import FeedbackModal from "../Components/FeedbackModal";
-
-// Function to sync pending feedback to Supabase
-const syncPendingFeedback = async (user) => {
-  const pendingFeedback = await db.feedback
-    .where({ participantId: user.participantId, status: "pending" })
-    .toArray();
-
-  // Assuming there's a Supabase function to sync feedback
-  pendingFeedback.forEach(async (feedback) => {
-    try {
-      // Replace this with actual Supabase sync logic
-      await supabase.from('feedback').insert([feedback]);
-      // Update the status of the feedback to 'synced'
-      await db.feedback.update(feedback.id, { status: 'synced' });
-    } catch (error) {
-      console.error('Error syncing feedback:', error);
-    }
-  });
-};
+import { uploadFeedback } from "../utils/uploadFeedback";  // Importing the uploadFeedback function
 
 export default function ModuleView() {
   const params = useParams();
@@ -35,7 +17,7 @@ export default function ModuleView() {
   const [completed, setCompleted] = useState([]);
   const [showFeedback, setShowFeedback] = useState(false);
 
-  // Route guard
+  // Route guard (check if moduleId exists)
   if (!moduleId) {
     return (
       <div className="p-6 text-white">
@@ -44,6 +26,7 @@ export default function ModuleView() {
     );
   }
 
+  // Fetching completed recordings from IndexedDB
   useEffect(() => {
     if (!user?.participantId) return;
     
@@ -79,6 +62,7 @@ export default function ModuleView() {
     );
   }
 
+  // Function to submit feedback
   const submitFeedback = async ({ sentenceNumber, correction }) => {
     // Save feedback in IndexedDB
     await db.feedback.add({
@@ -92,7 +76,14 @@ export default function ModuleView() {
 
     // If the user is online, sync feedback to Supabase
     if (navigator.onLine) {
-      syncPendingFeedback(user);
+      // Call the function to upload feedback to Supabase
+      await uploadFeedback({
+        participantId: user.participantId,
+        moduleId,
+        sentenceNumber,
+        correction,
+        createdAt: new Date(),
+      });
     }
   };
 
@@ -135,11 +126,13 @@ export default function ModuleView() {
           {module.title}
         </h1>
 
+        {/* Progress Bar */}
         <ProgressBar
           completed={completed.length}
           total={module.sentences.length}
         />
 
+        {/* Render each sentence with its SentenceCard */}
         {module.sentences.map((sentence, index) => (
           <SentenceCard
             key={sentence.sentenceId}
