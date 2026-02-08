@@ -1,3 +1,4 @@
+// SentenceCard.jsx
 import { useRecorder } from "../hooks/useRecorder";
 import { db } from "../db/indexdb";
 import { useUser } from "../context/UserContext";

@@ -5,6 +5,26 @@ import SentenceCard from "../Components/SentenceCard";
 import { db } from "../db/indexdb";
 import { useUser } from "../context/UserContext";
 import ProgressBar from "../Components/ProgressBar";
+import FeedbackModal from "../Components/FeedbackModal";
+
+// Function to sync pending feedback to Supabase
+const syncPendingFeedback = async (user) => {
+  const pendingFeedback = await db.feedback
+    .where({ participantId: user.participantId, status: "pending" })
+    .toArray();
+
+  // Assuming there's a Supabase function to sync feedback
+  pendingFeedback.forEach(async (feedback) => {
+    try {
+      // Replace this with actual Supabase sync logic
+      await supabase.from('feedback').insert([feedback]);
+      // Update the status of the feedback to 'synced'
+      await db.feedback.update(feedback.id, { status: 'synced' });
+    } catch (error) {
+      console.error('Error syncing feedback:', error);
+    }
+  });
+};
 
 export default function ModuleView() {
   const params = useParams();
@@ -13,6 +33,7 @@ export default function ModuleView() {
   const data = useSentences();
   const { user, loading } = useUser();
   const [completed, setCompleted] = useState([]);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   // Route guard
   if (!moduleId) {
@@ -58,6 +79,23 @@ export default function ModuleView() {
     );
   }
 
+  const submitFeedback = async ({ sentenceNumber, correction }) => {
+    // Save feedback in IndexedDB
+    await db.feedback.add({
+      participantId: user.participantId,
+      moduleId,
+      sentenceNumber: Number(sentenceNumber),
+      correction,
+      status: "pending", // Mark as pending until synced
+      createdAt: new Date(),
+    });
+
+    // If the user is online, sync feedback to Supabase
+    if (navigator.onLine) {
+      syncPendingFeedback(user);
+    }
+  };
+
   return (
     <div className="min-h-screen pb-20">
       <div className="p-6 space-y-4">
@@ -83,6 +121,16 @@ export default function ModuleView() {
           <span>Back to Dashboard</span>
         </button>
 
+        {/* Report a correction button */}
+        <button
+          onClick={() => setShowFeedback(true)}
+          className="w-full border border-blue-300 text-blue-600 
+                     rounded-xl py-3 font-semibold
+                     bg-blue-50 hover:bg-blue-100"
+        >
+          Report a correction
+        </button>
+
         <h1 className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
           {module.title}
         </h1>
@@ -105,6 +153,13 @@ export default function ModuleView() {
           />
         ))}
       </div>
+
+      {/* Feedback Modal */}
+      <FeedbackModal
+        open={showFeedback}
+        onClose={() => setShowFeedback(false)}
+        onSubmit={submitFeedback}
+      />
     </div>
   );
 }
