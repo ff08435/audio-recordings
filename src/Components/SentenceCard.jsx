@@ -99,7 +99,7 @@
 //           : "bg-white"
 //       }`}
 //     >
-//       <p className="text-sm text-gray-500 italic">
+//       <p className="text-xl font-extrabold text-black">
 //         {index + 1}. {sentence.english}
 //       </p>
 
