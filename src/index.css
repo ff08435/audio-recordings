@@ -33,3 +33,7 @@ button {
     @apply input-field appearance-none pr-10;
   }
 }
+/* iOS Safe Area Fix */
+.safe-top {
+  padding-top: calc(1rem + env(safe-area-inset-top));
+}
