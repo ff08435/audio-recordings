@@ -84,7 +84,7 @@ export default function Dashboard() {
 
   // ✅ JSX MUST BE RETURNED
   return (
-    <div className="p-4 space-y-4">
+    <div className="safe-top p-4 space-y-4">
       {/* Header with Instructions Link */}
       <div className="flex justify-between items-center mb-2">
         <h1 className="text-2xl font-bold text-gray-800">Recording Modules</h1>
