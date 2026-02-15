@@ -303,7 +303,7 @@ export default function SentenceCard({
           {index + 1}. {sentence.english}
         </p>
 
-        <p className="italic text-gray-600">
+        <p className="text-2xl font-black text-black tracking-wide">
           {sentence.transliteration}
         </p>
 
