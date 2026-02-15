@@ -103,7 +103,7 @@
 //         {index + 1}. {sentence.english}
 //       </p>
 
-//       <p className="text-xl font-bold text-gray-900">
+//       <p className="text-2xl font-black text-black tracking-wide">
 //         {sentence.transliteration}
 //       </p>
 
