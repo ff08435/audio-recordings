@@ -15,21 +15,18 @@ export default function Instructions() {
   // Check if user has seen instructions before
   useEffect(() => {
     const hasSeenInstructions = localStorage.getItem("hasSeenInstructions");
-    
-    // If returning user, auto-skip to dashboard
+
     if (hasSeenInstructions === "true") {
       navigate("/dashboard");
     }
   }, [navigate]);
 
   const handleStart = () => {
-    // Mark that user has seen instructions
     localStorage.setItem("hasSeenInstructions", "true");
     navigate("/dashboard");
   };
 
   const handleSkip = () => {
-    // Mark that user has seen instructions (so they won't see it again)
     localStorage.setItem("hasSeenInstructions", "true");
     navigate("/dashboard");
   };
@@ -37,26 +34,31 @@ export default function Instructions() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 px-4 py-8">
       <div className="max-w-2xl mx-auto">
-        
-        {/* Header with Skip Button */}
-        <div className="text-center mb-8 relative">
-          <button
-            onClick={handleSkip}
-            className="absolute right-0 top-0 text-gray-400 hover:text-yellow-400 text-sm underline transition-colors"
-          >
-            Skip Instructions →
-          </button>
-          <h1 className="text-3xl font-bold text-yellow-400 mb-2">
-            Recording Instructions
-          </h1>
-          <p className="text-gray-300">
-            Please read carefully before you begin
-          </p>
+
+        {/* Header Section (FIXED) */}
+        <div className="mb-8">
+          <div className="flex justify-end mb-2">
+            <button
+              onClick={handleSkip}
+              className="text-gray-400 hover:text-yellow-400 text-sm underline transition-colors"
+            >
+              Skip Instructions →
+            </button>
+          </div>
+
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-yellow-400 mb-2">
+              Recording Instructions
+            </h1>
+            <p className="text-gray-300">
+              Please read carefully before you begin
+            </p>
+          </div>
         </div>
 
         {/* Instructions Card */}
         <div className="bg-white rounded-2xl shadow-2xl p-6 space-y-6 mb-6">
-          
+
           {/* Step 1 */}
           <div className="space-y-2">
             <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -127,25 +129,8 @@ export default function Instructions() {
               Playback & Review
             </h2>
             <p className="text-gray-700 pl-10">
-              Listen to your recording using the playback controls. If you're not satisfied, click <span className="font-semibold">Re-record</span>.
+              Listen to your recording. If not satisfied, click <span className="font-semibold">Re-record</span>.
             </p>
-            <div className="pl-10 space-y-2">
-              <div className="bg-gray-100 p-3 rounded border border-gray-300">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <span>▶️</span>
-                  <div className="flex-1 h-1 bg-gray-300 rounded"></div>
-                  <span className="text-xs">0:03</span>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <div className="border border-gray-400 px-3 py-1 rounded text-sm">
-                  Re-record
-                </div>
-                <div className="bg-green-600 text-white px-3 py-1 rounded text-sm font-medium">
-                  Submit
-                </div>
-              </div>
-            </div>
           </div>
 
           {/* Step 6 */}
@@ -155,41 +140,10 @@ export default function Instructions() {
               Submit & Continue
             </h2>
             <p className="text-gray-700 pl-10">
-              When satisfied with your recording, click <span className="font-semibold">Submit</span>. The sentence will be marked as complete, and you can move to the next one.
+              Click <span className="font-semibold">Submit</span> to mark the sentence complete and move forward.
             </p>
           </div>
 
-          {/* Progress Bar Info */}
-          <div className="space-y-2 pt-4 border-t-2 border-gray-200">
-            <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-               Track Your Progress
-            </h2>
-            <p className="text-gray-700">
-              A progress bar at the top of each section shows how many sentences you've completed.
-            </p>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="flex justify-between text-sm font-medium mb-2">
-                <span className="text-purple-700">3 / 10</span>
-                <span>30%</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded h-3">
-                <div className="bg-green-600 rounded h-3" style={{ width: "30%" }}></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Important Notes */}
-        <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-4 mb-6">
-          <h3 className="font-bold text-yellow-900 mb-2">⚠️ Important:</h3>
-          <ul className="space-y-1 text-sm text-yellow-900">
-            <li>• Read ONLY the <strong>bold Burushaski text</strong>, not the English</li>
-            <li>• Speak clearly and at a natural pace</li>
-            <li>• Find a quiet place to record</li>
-            <li>• Each sentence can only be recorded once</li>
-            <li>• Your recordings are saved automatically</li>
-          </ul>
         </div>
 
         {/* Start Button */}
