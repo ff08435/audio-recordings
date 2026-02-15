@@ -95,7 +95,7 @@
 //     <div
 //       className={`border p-4 rounded space-y-2 transition ${
 //         isRecorded
-//           ? "bg-gray-100 opacity-60 pointer-events-none"
+//           ? "bg-gray-100 pointer-events-none"
 //           : "bg-white"
 //       }`}
 //     >
