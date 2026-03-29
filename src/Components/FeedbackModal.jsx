@@ -126,7 +126,7 @@ export default function FeedbackModal({
         <div>
           <h2 className="text-lg font-bold">Report a correction</h2>
           <p className="text-sm text-gray-500 mt-1">
-            Provide the correct English translation and record the correct transliteration.
+            Provide the correct transliteration and record that transliteration.
           </p>
         </div>
 
