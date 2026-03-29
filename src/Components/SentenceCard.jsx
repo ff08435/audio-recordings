@@ -112,7 +112,7 @@ export default function SentenceCard({
             onClick={() => setShowFeedback(true)}
             className="text-xs text-blue-600 underline"
           >
-            Report an issue
+            Suggest Correction Here!
           </button>
         )}
 
