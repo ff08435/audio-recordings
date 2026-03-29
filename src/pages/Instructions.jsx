@@ -1,25 +1,32 @@
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Instructions() {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user, loading } = useUser();
+  const [ready, setReady] = useState(false);
 
-  // If no user, redirect to onboarding
-  if (!user) {
-    navigate("/");
-    return null;
-  }
-
-  // Check if user has seen instructions before
   useEffect(() => {
-    const hasSeenInstructions = localStorage.getItem("hasSeenInstructions");
+    // Wait until user context has finished loading
+    if (loading) return;
 
+    // No user at all → go to onboarding
+    if (!user) {
+      navigate("/");
+      return;
+    }
+
+    // User has already seen instructions → skip to dashboard
+    const hasSeenInstructions = localStorage.getItem("hasSeenInstructions");
     if (hasSeenInstructions === "true") {
       navigate("/dashboard");
+      return;
     }
-  }, [navigate]);
+
+    // All good — show the instructions
+    setReady(true);
+  }, [loading, user, navigate]);
 
   const handleStart = () => {
     localStorage.setItem("hasSeenInstructions", "true");
@@ -31,11 +38,14 @@ export default function Instructions() {
     navigate("/dashboard");
   };
 
+  // Show nothing while we're figuring out what to do
+  if (!ready) return null;
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 px-4 py-8">
       <div className="max-w-2xl mx-auto">
 
-        {/* Header Section (FIXED) */}
+        {/* Header Section */}
         <div className="mb-8">
           <div className="flex justify-end mb-2">
             <button
