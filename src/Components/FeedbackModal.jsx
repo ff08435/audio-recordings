@@ -148,7 +148,7 @@ export default function FeedbackModal({
               Correct Translation in English
             </label>
             <textarea
-              placeholder="Type the correct English translation..."
+              placeholder="Type the correct English translation and Burushaski transliteration"
               value={correctEnglish}
               onChange={(e) => setCorrectEnglish(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-black resize-none"
