@@ -87,27 +87,29 @@ export default function Dashboard() {
     <div className="safe-top p-4 space-y-4">
       {/* Header with Instructions Link */}
       <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
-        <div className="flex items-center gap-2 min-w-0">
+        <h1 className="text-2xl font-bold text-yellow-400 truncate min-w-0">
+          Recording Modules
+        </h1>
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           <button
             type="button"
-            onClick={() => navigate("/stats", { replace: true })}
-            className="shrink-0 w-9 h-9 flex items-center justify-center rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white active:scale-95 transition-all touch-manipulation"
+            onClick={() => navigate("/stats")}
+            className="text-sm text-black font-bold bg-yellow-400 hover:bg-yellow-300 px-3 py-1 rounded active:scale-95 transition-all touch-manipulation"
             style={{ WebkitTapHighlightColor: "transparent" }}
-            aria-label="Back to Your Progress"
           >
-            <span className="text-lg leading-none">←</span>
+            Show stats
           </button>
-          <h1 className="text-2xl font-bold text-yellow-400 truncate">Recording Modules</h1>
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.removeItem("hasSeenInstructions");
+              navigate("/instructions");
+            }}
+            className="text-sm text-white font-bold bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
+          >
+            📖 View Instructions
+          </button>
         </div>
-        <button
-          onClick={() => {
-            localStorage.removeItem("hasSeenInstructions");
-            navigate("/instructions");
-          }}
-          className="text-sm text-white font-bold bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
-        >
-          📖 View Instructions
-        </button>
       </div>
 
       {reminderMessage && (

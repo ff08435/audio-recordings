@@ -35,7 +35,7 @@ export default function Instructions() {
 
   const handleSkip = () => {
     localStorage.setItem("hasSeenInstructions", "true");
-    navigate("/stats", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   // Show nothing while we're figuring out what to do
