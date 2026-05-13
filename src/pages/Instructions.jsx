@@ -13,14 +13,14 @@ export default function Instructions() {
 
     // No user at all → go to onboarding
     if (!user) {
-      navigate("/");
+      navigate("/", { replace: true });
       return;
     }
 
     // User has already seen instructions → skip to dashboard
     const hasSeenInstructions = localStorage.getItem("hasSeenInstructions");
     if (hasSeenInstructions === "true") {
-      navigate("/dashboard");
+      navigate("/dashboard", { replace: true });
       return;
     }
 
@@ -30,12 +30,12 @@ export default function Instructions() {
 
   const handleStart = () => {
     localStorage.setItem("hasSeenInstructions", "true");
-    navigate("/dashboard");
+    navigate("/dashboard", { replace: true });
   };
 
   const handleSkip = () => {
     localStorage.setItem("hasSeenInstructions", "true");
-    navigate("/dashboard");
+    navigate("/dashboard", { replace: true });
   };
 
   // Show nothing while we're figuring out what to do
