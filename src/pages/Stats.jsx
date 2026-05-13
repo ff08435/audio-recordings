@@ -65,21 +65,21 @@ export default function Stats() {
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       {/* ── Header ── */}
-      <div className="sticky top-0 z-10 bg-neutral-950/90 backdrop-blur border-b border-neutral-800 px-4 py-3 flex items-center gap-3">
-        <button
-          onClick={() => navigate("/dashboard", { replace: true })}
-          className="w-9 h-9 flex items-center justify-center rounded-xl bg-neutral-800 hover:bg-neutral-700 active:scale-95 transition-all touch-manipulation"
-          style={{ WebkitTapHighlightColor: "transparent" }}
-          aria-label="Back to Dashboard"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M19 12H5M12 5l-7 7 7 7" />
-          </svg>
-        </button>
-        <h1 className="text-base font-semibold text-yellow-400 tracking-wide">Your Progress</h1>
+      <div className="sticky top-0 z-10 bg-neutral-950/90 backdrop-blur border-b border-neutral-800 px-4 py-3">
+        <h1 className="text-base font-semibold text-yellow-400 tracking-wide text-center">
+          Your Progress
+        </h1>
       </div>
 
       <div className="px-4 py-6 space-y-6 max-w-lg mx-auto">
+        <button
+          type="button"
+          onClick={() => navigate("/dashboard")}
+          className="w-full bg-yellow-400 hover:bg-yellow-300 active:scale-95 text-black font-bold py-3.5 rounded-xl text-sm transition-all touch-manipulation"
+          style={{ WebkitTapHighlightColor: "transparent" }}
+        >
+          Go to Dashboard
+        </button>
 
         {/* ── Big ring + greeting ── */}
         <div className="flex items-center gap-5 bg-neutral-900 rounded-2xl p-5 border border-neutral-800">
@@ -134,14 +134,6 @@ export default function Stats() {
           </div>
         </div>
 
-        {/* ── CTA back to dashboard ── */}
-        <button
-          onClick={() => navigate("/dashboard", { replace: true })}
-          className="w-full bg-yellow-400 hover:bg-yellow-300 active:scale-95 text-black font-bold py-3.5 rounded-xl text-sm transition-all touch-manipulation"
-          style={{ WebkitTapHighlightColor: "transparent" }}
-        >
-          Back to Dashboard
-        </button>
       </div>
     </div>
   );

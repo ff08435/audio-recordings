@@ -86,8 +86,19 @@ export default function Dashboard() {
   return (
     <div className="safe-top p-4 space-y-4">
       {/* Header with Instructions Link */}
-      <div className="flex justify-between items-center mb-2">
-        <h1 className="text-2xl font-bold text-yellow-400">Recording Modules</h1>
+      <div className="flex justify-between items-center mb-2 gap-2 flex-wrap">
+        <div className="flex items-center gap-2 min-w-0">
+          <button
+            type="button"
+            onClick={() => navigate("/stats", { replace: true })}
+            className="shrink-0 w-9 h-9 flex items-center justify-center rounded-xl bg-neutral-800 hover:bg-neutral-700 text-white active:scale-95 transition-all touch-manipulation"
+            style={{ WebkitTapHighlightColor: "transparent" }}
+            aria-label="Back to Your Progress"
+          >
+            <span className="text-lg leading-none">←</span>
+          </button>
+          <h1 className="text-2xl font-bold text-yellow-400 truncate">Recording Modules</h1>
+        </div>
         <button
           onClick={() => {
             localStorage.removeItem("hasSeenInstructions");
@@ -111,9 +122,10 @@ export default function Dashboard() {
         return (
           <div
             key={module.moduleId}
-            onClick={() =>
-              !isCompleted && navigate(`/module/${module.moduleId}`)
-            }
+            onClick={() => {
+              if (isCompleted) return;
+              navigate(`/module/${module.moduleId}`);
+            }}
             className={`border p-4 rounded space-y-2 ${
               isCompleted
                 ? "bg-gray-100 text-gray-500 cursor-not-allowed"
