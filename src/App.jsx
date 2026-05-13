@@ -6,6 +6,7 @@ import Onboarding from "./pages/Onboarding";
 import Instructions from "./pages/Instructions";
 import Dashboard from "./pages/Dashboard";
 import ModuleView from "./pages/ModuleView";
+import Stats from "./pages/Stats";
 import { syncPendingRecordings } from "./utils/syncRecordings";
 import { registerSW } from 'virtual:pwa-register';
 
@@ -55,6 +56,7 @@ useEffect(() => {
         <Route path="/instructions" element={<Instructions />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/module/:moduleId" element={<ModuleView />} />
+        <Route path="/stats" element={<Stats />} />
       </Routes>
     </BrowserRouter>
   );
