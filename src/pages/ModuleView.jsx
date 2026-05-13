@@ -48,7 +48,7 @@ export default function ModuleView() {
 
         {/* Back button */}
         <button
-          onClick={() => navigate("/dashboard", { replace: true })}
+          onClick={() => navigate("/stats", { replace: true })}
           className="flex items-center justify-center gap-3 w-full
                      bg-yellow-400/10 hover:bg-yellow-400/20 
                      text-yellow-400 font-bold text-base
