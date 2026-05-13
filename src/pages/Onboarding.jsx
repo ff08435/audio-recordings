@@ -47,7 +47,7 @@ export default function Onboarding() {
     }
 
     setUser(userData);
-    navigate("/instructions");
+    navigate("/instructions", { replace: true });
   };
 
   return (
