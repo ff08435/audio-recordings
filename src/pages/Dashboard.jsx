@@ -124,12 +124,7 @@ export default function Dashboard() {
             key={module.moduleId}
             onClick={() => {
               if (isCompleted) return;
-              // Stack /stats under the module so Android/PWA system back returns to
-              // Stats instead of leaving the app or skipping Stats.
-              navigate("/stats");
-              setTimeout(() => {
-                navigate(`/module/${module.moduleId}`);
-              }, 0);
+              navigate(`/module/${module.moduleId}`);
             }}
             className={`border p-4 rounded space-y-2 ${
               isCompleted
