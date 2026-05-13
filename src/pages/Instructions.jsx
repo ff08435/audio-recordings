@@ -17,10 +17,10 @@ export default function Instructions() {
       return;
     }
 
-    // User has already seen instructions → skip to stats (hub before dashboard)
+    // User has already seen instructions → skip to dashboard
     const hasSeenInstructions = localStorage.getItem("hasSeenInstructions");
     if (hasSeenInstructions === "true") {
-      navigate("/stats", { replace: true });
+      navigate("/dashboard", { replace: true });
       return;
     }
 
@@ -30,7 +30,7 @@ export default function Instructions() {
 
   const handleStart = () => {
     localStorage.setItem("hasSeenInstructions", "true");
-    navigate("/stats", { replace: true });
+    navigate("/dashboard", { replace: true });
   };
 
   const handleSkip = () => {
